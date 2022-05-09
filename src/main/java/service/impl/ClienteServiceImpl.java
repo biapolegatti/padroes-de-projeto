@@ -17,10 +17,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     private ClienteRepostiory clienteRepostiory;
-
     @Autowired
     private EnderecoRepository enderecoRepository;
-
     @Autowired
     private ViaCepService viaCepService;
 
@@ -37,22 +35,32 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void inserir(Cliente cliente) {
-        String cep = cliente.getEndereco().getCep();
-        Endereco endereco = enderecoRepository.findById(cep).orElseGet(() -> {
-
-
-            return null;
-        });
-
+        salvarClienteCep(cliente);
     }
 
+    private void salvarClienteCep(Cliente cliente){
+        String cep = cliente.getEndereco().getCep();
+        Endereco endereco = enderecoRepository.findById(cep).orElseGet(() -> {
+            Endereco novoEndereco = viaCepService.consultarCep(cep);
+            enderecoRepository.save(novoEndereco);
+            return null;
+        });
+        cliente.setEndereco(endereco);
+        clienteRepostiory.save(cliente);
+    }
     @Override
     public void atualizar(Long id, Cliente cliente) {
+        Optional<Cliente> clienteBd = clienteRepostiory.findById(id);
+        if (clienteBd.isPresent()) {
+            salvarClienteCep(cliente);
+
+       }
 
     }
 
     @Override
     public void deletar(Long id) {
+        clienteRepostiory.deleteById(id);
 
     }
 }
