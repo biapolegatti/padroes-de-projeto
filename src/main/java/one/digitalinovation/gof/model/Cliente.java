@@ -1,4 +1,4 @@
-package model;
+package one.digitalinovation.gof.model;
 
 import javax.persistence.*;
 

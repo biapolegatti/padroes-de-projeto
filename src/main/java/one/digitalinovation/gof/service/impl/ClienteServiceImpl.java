@@ -1,14 +1,14 @@
-package service.impl;
+package one.digitalinovation.gof.service.impl;
 
-import model.Cliente;
-import model.ClienteRepostiory;
-import model.Endereco;
-import model.EnderecoRepository;
-import org.bouncycastle.est.EnrollmentResponse;
+import one.digitalinovation.gof.model.Cliente;
+import one.digitalinovation.gof.model.ClienteRepostiory;
+import one.digitalinovation.gof.model.Endereco;
+import one.digitalinovation.gof.model.EnderecoRepository;
+import one.digitalinovation.gof.service.ClienteService;
+import one.digitalinovation.gof.service.ViaCepService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.ClienteService;
-import service.ViaCepService;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
@@ -21,6 +21,9 @@ public class ClienteServiceImpl implements ClienteService {
     private EnderecoRepository enderecoRepository;
     @Autowired
     private ViaCepService viaCepService;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     @Override
     public Iterable<Cliente> buscarTodos() {
@@ -38,7 +41,7 @@ public class ClienteServiceImpl implements ClienteService {
         salvarClienteCep(cliente);
     }
 
-    private void salvarClienteCep(Cliente cliente){
+    private void salvarClienteCep(Cliente cliente) {
         String cep = cliente.getEndereco().getCep();
         Endereco endereco = enderecoRepository.findById(cep).orElseGet(() -> {
             Endereco novoEndereco = viaCepService.consultarCep(cep);
@@ -55,7 +58,6 @@ public class ClienteServiceImpl implements ClienteService {
             salvarClienteCep(cliente);
 
        }
-
     }
     @Override
     public void deletar(Long id) {

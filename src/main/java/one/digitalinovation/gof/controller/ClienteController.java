@@ -1,13 +1,13 @@
-package controller;
+package one.digitalinovation.gof.controller;
 
-import model.Cliente;
+import one.digitalinovation.gof.model.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.ClienteService;
+import one.digitalinovation.gof.service.ClienteService;
 
 @RestController
-@RequestMapping("clientes")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class ClienteController {
 
     }
 
-    @PostMapping("/{id}")
+    @PostMapping
     public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente) {
         clienteService.inserir(cliente);
         return ResponseEntity.ok(cliente);
@@ -43,6 +43,5 @@ public class ClienteController {
     public ResponseEntity<Cliente> deletar(@PathVariable Long id) {
         clienteService.deletar(id);
         return ResponseEntity.ok().build();
-
     }
 }

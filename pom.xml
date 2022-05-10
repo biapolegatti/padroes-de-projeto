@@ -14,7 +14,6 @@
     <name>lab-padroes-projeto-spring</name>
     <description>Exemplo de Padrões de Projeto em Spring</description>
 
-
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.2</spring-cloud.version>

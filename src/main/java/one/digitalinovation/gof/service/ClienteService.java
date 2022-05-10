@@ -1,6 +1,6 @@
-package service;
+package one.digitalinovation.gof.service;
 
-import model.Cliente;
+import one.digitalinovation.gof.model.Cliente;
 
 public interface ClienteService {
 
@@ -13,6 +13,5 @@ public interface ClienteService {
     void atualizar(Long id, Cliente cliente);
 
     void deletar(Long id);
-
 
 }
